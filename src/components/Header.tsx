@@ -6,9 +6,10 @@ interface Props {
   view: View;
   onViewChange: (view: View) => void;
   onNav: (dir: -1 | 1) => void;
+  onOpenSettings: () => void;
 }
 
-export function Header({ headline, points, view, onViewChange, onNav }: Props) {
+export function Header({ headline, points, view, onViewChange, onNav, onOpenSettings }: Props) {
   return (
     <header className="header">
       <div>
@@ -41,6 +42,9 @@ export function Header({ headline, points, view, onViewChange, onNav }: Props) {
         </button>
         <button type="button" className="btn" aria-label="Next" onClick={() => onNav(1)}>
           ›
+        </button>
+        <button type="button" className="btn" aria-label="Settings" onClick={onOpenSettings}>
+          ⚙
         </button>
       </div>
     </header>

@@ -17,7 +17,7 @@ A reference implementation exists in `reference/fit-calendar.jsx` (single-file R
 ## Data model
 
 ```ts
-type ActivityType = 'lift' | 'run' | 'hike';
+type ActivityType = 'lift' | 'run' | 'hike' | 'swim' | 'bike' | 'yoga' | 'climb' | 'walk';
 type SessionStatus = 'planned' | 'done' | 'partial' | 'skipped';
 
 interface Session {
@@ -46,6 +46,14 @@ interface Session {
 - partial: left half activity color, right half white (hard 50% split, no gradient blend)
 - skipped: gray bg, muted strikethrough text
 
+### Settings (activity colors)
+
+- Gear button (`⚙`) at the end of the header controls opens a settings modal (native `<dialog>`, Esc and backdrop-click close it).
+- One row per activity type: icon + label + a radiogroup of 10 preset color swatches. Clicking a swatch assigns that color to the activity everywhere (chips, picker buttons). Free color input is deliberately not offered.
+- "Reset to defaults" button restores the default color mapping.
+- Persistence: `localStorage` key `fit-settings-v1`, a JSON object `Record<ActivityType, string>`. Unknown/missing keys fall back to defaults on load.
+- Colors are applied via CSS custom properties `--color-<type>` set on the app root; `[data-type]` rules in `styles.css` map them to `--activity`.
+
 ### Gamification
 
 - Points: done +10, partial +4, skipped/planned 0. Sum over all sessions, shown in a dark-magenta block in the header.
@@ -72,9 +80,10 @@ interface Session {
 --warn: #c2412d;
 ```
 
+- Activity colors are user-configurable (see Settings) from a fixed 10-swatch palette (flat, dark enough for white chip text): `#a0146b` magenta, `#7048b6` violet, `#3d5aa9` indigo, `#0e7490` azure, `#1f7a6d` teal, `#567d1e` moss, `#b07a1e` ochre, `#bc5215` rust, `#c2412d` red, `#6e6276` slate. Defaults: lift magenta, run teal, hike ochre, swim azure, bike rust, yoga violet, climb slate, walk moss.
 - Flat design: **no shadows, no gradients** (the partial-status split is a hard color stop, not a fade), 2px solid borders, border-radius 4–6px, white cards on `--bg`.
 - Font: Sora (Google Fonts), weights 400/600/700/800. System fallback.
-- Activity icons are plain glyphs: lift ▲, run ●, hike ◆.
+- Activity icons are plain glyphs: lift ▲, run ●, hike ◆, swim ≈, bike ⬢, yoga ◐, climb ✦, walk ■.
 
 ## Quality floor
 
@@ -87,11 +96,12 @@ interface Session {
 
 ```
 src/
-  types.ts            // Session, ActivityType, SessionStatus, constants (ACTIVITIES, POINTS, NEXT_STATUS)
+  types.ts            // Session, ActivityType, SessionStatus, constants (ACTIVITIES, POINTS, NEXT_STATUS, PALETTE, DEFAULT_COLORS)
   lib/dates.ts        // iso(), monthGrid(), weekOf() — pure, unit-testable
   lib/gamification.ts // computeStats(sessions) — pure
   hooks/useSessions.ts// state + localStorage persistence + add/cycle/remove
-  components/         // Header, BadgeStrip, CalendarGrid, DayCell, SessionChip, AddPicker
+  hooks/useSettings.ts// activity colors + localStorage persistence
+  components/         // Header, BadgeStrip, CalendarGrid, DayCell, SessionChip, AddPicker, SettingsModal
   App.tsx
   styles.css
 ```

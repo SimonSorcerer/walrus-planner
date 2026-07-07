@@ -1,11 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { BadgeStrip } from './components/BadgeStrip';
 import { CalendarGrid } from './components/CalendarGrid';
 import { Header, type View } from './components/Header';
+import { SettingsModal } from './components/SettingsModal';
 import { useSessions } from './hooks/useSessions';
+import { useSettings } from './hooks/useSettings';
 import { iso, monthGrid, weekOf } from './lib/dates';
 import { computeStats } from './lib/gamification';
-import type { Session } from './types';
+import { ACTIVITY_TYPES, type Session } from './types';
 
 const MONTHS = [
   'January',
@@ -24,11 +26,21 @@ const MONTHS = [
 
 export default function App() {
   const { sessions, add, cycle, remove } = useSessions();
+  const { colors, setColor, reset } = useSettings();
   const [view, setView] = useState<View>('month');
   const [anchor, setAnchor] = useState(() => new Date());
   const [adding, setAdding] = useState<string | null>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const todayIso = iso(new Date());
+  // expose activity colors as CSS custom properties; styles.css maps them per data-type
+  const colorVars = useMemo(
+    () =>
+      Object.fromEntries(
+        ACTIVITY_TYPES.map((t) => [`--color-${t}`, colors[t]]),
+      ) as CSSProperties,
+    [colors],
+  );
   const stats = useMemo(() => computeStats(sessions), [sessions]);
   const sessionsByDate = useMemo(() => {
     const map: Record<string, Session[]> = {};
@@ -56,13 +68,14 @@ export default function App() {
       : `Week of ${cells[0].getDate()} ${MONTHS[cells[0].getMonth()].slice(0, 3)} ${cells[0].getFullYear()}`;
 
   return (
-    <div className="app">
+    <div className="app" style={colorVars}>
       <Header
         headline={headline}
         points={stats.points}
         view={view}
         onViewChange={setView}
         onNav={nav}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
       <BadgeStrip badges={stats.badges} />
       <CalendarGrid
@@ -83,6 +96,13 @@ export default function App() {
         <span>Tap a session to cycle: planned → done → partial → skipped</span>
         <span className="legend__points">done +10 · partial +4 · skipped 0 (and it haunts you)</span>
       </div>
+      <SettingsModal
+        open={settingsOpen}
+        colors={colors}
+        onSetColor={setColor}
+        onReset={reset}
+        onClose={() => setSettingsOpen(false)}
+      />
     </div>
   );
 }

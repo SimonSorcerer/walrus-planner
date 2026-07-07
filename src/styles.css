@@ -193,17 +193,38 @@ button:focus-visible,
   color: var(--magenta);
 }
 
-/* activity color hook shared by chips and picker buttons */
+/* activity color hook shared by chips and picker buttons;
+   the --color-* values are set on .app from user settings */
 [data-type='lift'] {
-  --activity: var(--magenta);
+  --activity: var(--color-lift, var(--magenta));
 }
 
 [data-type='run'] {
-  --activity: var(--run);
+  --activity: var(--color-run, var(--run));
 }
 
 [data-type='hike'] {
-  --activity: var(--hike);
+  --activity: var(--color-hike, var(--hike));
+}
+
+[data-type='swim'] {
+  --activity: var(--color-swim);
+}
+
+[data-type='bike'] {
+  --activity: var(--color-bike);
+}
+
+[data-type='yoga'] {
+  --activity: var(--color-yoga);
+}
+
+[data-type='climb'] {
+  --activity: var(--color-climb);
+}
+
+[data-type='walk'] {
+  --activity: var(--color-walk);
 }
 
 /* session chips */
@@ -287,12 +308,13 @@ button:focus-visible,
 /* add picker */
 .add-picker {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   margin-top: 4px;
 }
 
 .add-picker__option {
-  flex: 1;
+  flex: 1 0 21%; /* 4 options per row */
   min-width: 0;
   border: 2px solid var(--activity);
   color: var(--activity);
@@ -302,6 +324,84 @@ button:focus-visible,
   font-weight: 700;
   padding: 3px 0;
   cursor: pointer;
+}
+
+/* settings modal */
+.settings {
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  padding: 0;
+  width: min(440px, calc(100vw - 32px));
+  color: var(--ink);
+}
+
+.settings::backdrop {
+  background: rgb(38 25 31 / 45%);
+}
+
+.settings__body {
+  padding: 16px;
+}
+
+.settings__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.settings__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.settings__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 2px solid var(--line);
+}
+
+.settings__icon {
+  width: 16px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.settings__label {
+  width: 48px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.settings__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.swatch--active {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.settings__foot {
+  margin-top: 12px;
 }
 
 /* legend */
