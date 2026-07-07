@@ -21,7 +21,9 @@ export function AddPicker({ onPick, onClose }: Props) {
             onClose();
           }}
         >
-          {ACTIVITIES[type].icon}
+          <span className="msym" aria-hidden="true">
+            {ACTIVITIES[type].icon}
+          </span>
         </button>
       ))}
     </div>

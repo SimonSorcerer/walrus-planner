@@ -227,6 +227,21 @@ button:focus-visible,
   --activity: var(--color-walk);
 }
 
+/* Material Symbols base (rendered as ligature text) */
+.msym {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: 'opsz' 20, 'wght' 500, 'FILL' 0, 'GRAD' 0;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: 'liga';
+}
+
 /* session chips */
 .chip {
   display: flex;
@@ -264,8 +279,14 @@ button:focus-visible,
   color: var(--ink);
 }
 
-.chip[data-status='partial'] .chip__label {
+.chip[data-status='partial'] .chip__label,
+.chip[data-status='partial'] .chip__icon {
   mix-blend-mode: difference;
+}
+
+/* filled icon on solid chips for contrast */
+.chip[data-status='done'] .chip__icon {
+  font-variation-settings: 'opsz' 20, 'wght' 500, 'FILL' 1, 'GRAD' 0;
 }
 
 .chip[data-status='skipped'] {
@@ -276,11 +297,11 @@ button:focus-visible,
 }
 
 .chip__icon {
-  font-size: 8px;
+  font-size: 12px;
 }
 
 .chip--big .chip__icon {
-  font-size: 10px;
+  font-size: 16px;
 }
 
 .chip__label {
@@ -316,14 +337,23 @@ button:focus-visible,
 .add-picker__option {
   flex: 1 0 21%; /* 4 options per row */
   min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid var(--activity);
   color: var(--activity);
   background: #fff;
   border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
   padding: 3px 0;
   cursor: pointer;
+}
+
+.add-picker__option .msym {
+  font-size: 16px;
+}
+
+.day--big .add-picker__option .msym {
+  font-size: 20px;
 }
 
 /* settings modal */
@@ -367,8 +397,8 @@ button:focus-visible,
 }
 
 .settings__icon {
-  width: 16px;
-  font-size: 12px;
+  width: 20px;
+  font-size: 18px;
   text-align: center;
 }
 

@@ -39,7 +39,7 @@ export function SettingsModal({ open, colors, onSetColor, onReset, onClose }: Pr
         </div>
         {ACTIVITY_TYPES.map((type) => (
           <div key={type} className="settings__row">
-            <span className="settings__icon" aria-hidden="true" style={{ color: colors[type] }}>
+            <span className="settings__icon msym" aria-hidden="true" style={{ color: colors[type] }}>
               {ACTIVITIES[type].icon}
             </span>
             <span className="settings__label">{ACTIVITIES[type].label}</span>

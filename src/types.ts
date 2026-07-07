@@ -16,16 +16,17 @@ export interface Session {
     status: SessionStatus;
 }
 
+// icon = Material Symbols ligature name (rendered via the .msym class)
 export const ACTIVITIES: Record<ActivityType, { label: string; icon: string }> =
     {
-        weights: { label: 'Weights', icon: '▲' },
-        run: { label: 'Run', icon: '●' },
-        hike: { label: 'Hike', icon: '◆' },
-        swim: { label: 'Swim', icon: '≈' },
-        bike: { label: 'Bike', icon: '⬢' },
-        trail: { label: 'Trail', icon: '◐' },
-        climb: { label: 'Climb', icon: '✦' },
-        walk: { label: 'Walk', icon: '■' },
+        weights: { label: 'Weights', icon: 'exercise' },
+        run: { label: 'Run', icon: 'directions_run' },
+        hike: { label: 'Hike', icon: 'hiking' },
+        swim: { label: 'Swim', icon: 'pool' },
+        bike: { label: 'Bike', icon: 'directions_bike' },
+        trail: { label: 'Trail', icon: 'sprint' },
+        climb: { label: 'Climb', icon: 'mountain_flag' },
+        walk: { label: 'Walk', icon: 'directions_walk' },
     };
 
 /** Preset swatches for the settings modal — flat, dark enough for white chip text. */

@@ -17,7 +17,7 @@ A reference implementation exists in `reference/fit-calendar.jsx` (single-file R
 ## Data model
 
 ```ts
-type ActivityType = 'lift' | 'run' | 'hike' | 'swim' | 'bike' | 'yoga' | 'climb' | 'walk';
+type ActivityType = 'weights' | 'run' | 'hike' | 'swim' | 'bike' | 'trail' | 'climb' | 'walk';
 type SessionStatus = 'planned' | 'done' | 'partial' | 'skipped';
 
 interface Session {
@@ -80,10 +80,11 @@ interface Session {
 --warn: #c2412d;
 ```
 
-- Activity colors are user-configurable (see Settings) from a fixed 10-swatch palette (flat, dark enough for white chip text): `#a0146b` magenta, `#7048b6` violet, `#3d5aa9` indigo, `#0e7490` azure, `#1f7a6d` teal, `#567d1e` moss, `#b07a1e` ochre, `#bc5215` rust, `#c2412d` red, `#6e6276` slate. Defaults: lift magenta, run teal, hike ochre, swim azure, bike rust, yoga violet, climb slate, walk moss.
+- Activity colors are user-configurable (see Settings) from a fixed 10-swatch palette (flat, dark enough for white chip text): `#a0146b` magenta, `#7048b6` violet, `#3d5aa9` indigo, `#0e7490` azure, `#1f7a6d` teal, `#567d1e` moss, `#b07a1e` ochre, `#bc5215` rust, `#c2412d` red, `#6e6276` slate. Defaults: weights magenta, run teal, hike ochre, swim azure, bike rust, trail violet, climb slate, walk moss.
 - Flat design: **no shadows, no gradients** (the partial-status split is a hard color stop, not a fade), 2px solid borders, border-radius 4–6px, white cards on `--bg`.
 - Font: Sora (Google Fonts), weights 400/600/700/800. System fallback.
-- Activity icons are plain glyphs: lift ▲, run ●, hike ◆, swim ≈, bike ⬢, yoga ◐, climb ✦, walk ■.
+- Activity icons are Google **Material Symbols** (Outlined, variable), loaded from Google Fonts subset to exactly the 8 icons via `icon_names=` with `display=block` (same pattern as Sora). They render as ligature text inside a `.msym` span; `ACTIVITIES[type].icon` holds the ligature name. Mapping: weights `exercise`, run `directions_run`, hike `hiking`, swim `pool`, bike `directions_bike`, trail `sprint`, climb `mountain_flag`, walk `directions_walk`.
+- Icon sizes: 12px in month chips (compact — week view is the detail view), 16px in week chips, 16px picker buttons (20px in week view), 18px in settings rows. Solid `done` chips use the filled variant (`FILL 1`); `partial` chip icons get the same `mix-blend-mode: difference` as the label.
 
 ## Quality floor
 

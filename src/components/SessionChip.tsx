@@ -32,7 +32,7 @@ export function SessionChip({ session, big, onCycle, onRemove }: Props) {
         }
       }}
     >
-      <span className="chip__icon" aria-hidden="true">
+      <span className="chip__icon msym" aria-hidden="true">
         {activity.icon}
       </span>
       <span className="chip__label">{label}</span>
