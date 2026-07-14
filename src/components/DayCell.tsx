@@ -5,6 +5,7 @@ import { SessionChip } from './SessionChip';
 interface Props {
   dateIso: string;
   dayNumber: number;
+  dayName?: string; // shown in week view, where there is no column header
   inMonth: boolean;
   isToday: boolean;
   big: boolean;
@@ -20,6 +21,7 @@ interface Props {
 export function DayCell({
   dateIso,
   dayNumber,
+  dayName,
   inMonth,
   isToday,
   big,
@@ -58,10 +60,15 @@ export function DayCell({
           : undefined
       }
     >
-      <div className="day__number">{dayNumber}</div>
-      {sessions.map((s) => (
-        <SessionChip key={s.id} session={s} big={big} onCycle={onCycle} onRemove={onRemove} />
-      ))}
+      <div className="day__number">
+        {dayName && <span className="day__name">{dayName}</span>}
+        {dayNumber}
+      </div>
+      <div className="day__sessions">
+        {sessions.map((s) => (
+          <SessionChip key={s.id} session={s} big={big} onCycle={onCycle} onRemove={onRemove} />
+        ))}
+      </div>
       {pickerOpen && inMonth && (
         <AddPicker onPick={(type) => onAdd(dateIso, type)} onClose={onClosePicker} />
       )}

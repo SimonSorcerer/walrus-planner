@@ -32,7 +32,7 @@ interface Session {
 
 ### Calendar
 
-- Two views: **month** (grid, Mon–Sun columns, leading/trailing days dimmed and non-interactive) and **week** (7 tall columns).
+- Two views: **month** (grid, Mon–Sun columns, leading/trailing days dimmed and non-interactive) and **week** (agenda-style: the 7 days stacked as full-width rows, Mon–Sun; each row carries its own weekday label, chips flow horizontally and wrap, so labels don't truncate).
 - Prev/next navigation moves by one month or one week depending on view.
 - Today's cell has a magenta border and magenta day number.
 - Click an (in-month) day cell → open a small inline picker with 3 activity buttons → clicking one adds a `planned` session for that day and closes the picker. Clicking the day again toggles the picker closed.

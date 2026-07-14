@@ -33,14 +33,16 @@ export function CalendarGrid({
 }: Props) {
   return (
     <div>
-      <div className="dow-row">
-        {DAY_NAMES.map((name) => (
-          <div key={name} className="dow">
-            {name}
-          </div>
-        ))}
-      </div>
-      <div className="grid">
+      {view === 'month' && (
+        <div className="dow-row">
+          {DAY_NAMES.map((name) => (
+            <div key={name} className="dow">
+              {name}
+            </div>
+          ))}
+        </div>
+      )}
+      <div className={view === 'week' ? 'grid grid--week' : 'grid'}>
         {cells.map((d) => {
           const key = iso(d);
           return (
@@ -48,6 +50,7 @@ export function CalendarGrid({
               key={key}
               dateIso={key}
               dayNumber={d.getDate()}
+              dayName={view === 'week' ? DAY_NAMES[(d.getDay() + 6) % 7] : undefined}
               inMonth={view === 'week' || d.getMonth() === anchorMonth}
               isToday={key === todayIso}
               big={view === 'week'}

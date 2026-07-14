@@ -166,8 +166,14 @@ button:focus-visible,
   cursor: pointer;
 }
 
+/* week view: days stacked as full-width rows */
+.grid--week {
+  grid-template-columns: 1fr;
+}
+
 .day--big {
-  min-height: 200px;
+  min-height: 64px;
+  padding: 8px 10px;
 }
 
 .day--today {
@@ -188,15 +194,35 @@ button:focus-visible,
   margin-bottom: 4px;
 }
 
+.day__name {
+  margin-right: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .day--today .day__number {
   font-weight: 800;
   color: var(--magenta);
 }
 
+.day__sessions {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.day--big .day__sessions {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
 /* activity color hook shared by chips and picker buttons;
    the --color-* values are set on .app from user settings */
-[data-type='lift'] {
-  --activity: var(--color-lift, var(--magenta));
+[data-type='weights'] {
+  --activity: var(--color-weights, var(--magenta));
 }
 
 [data-type='run'] {
@@ -215,8 +241,8 @@ button:focus-visible,
   --activity: var(--color-bike);
 }
 
-[data-type='yoga'] {
-  --activity: var(--color-yoga);
+[data-type='trail'] {
+  --activity: var(--color-trail);
 }
 
 [data-type='climb'] {
@@ -254,7 +280,6 @@ button:focus-visible,
   font-weight: 600;
   cursor: pointer;
   user-select: none;
-  margin-bottom: 3px;
   min-width: 0;
 }
 
@@ -350,6 +375,16 @@ button:focus-visible,
 
 .add-picker__option .msym {
   font-size: 16px;
+}
+
+/* in week rows the picker doesn't stretch — fixed-size buttons in one line */
+.day--big .add-picker {
+  gap: 6px;
+}
+
+.day--big .add-picker__option {
+  flex: 0 0 48px;
+  min-height: 32px;
 }
 
 .day--big .add-picker__option .msym {
